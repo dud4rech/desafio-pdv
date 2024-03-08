@@ -1,0 +1,82 @@
+table {
+    width: 100%; 
+    border-collapse: collapse;
+    text-align: left;
+    font-weight: bold;
+    table-layout: fixed;
+}
+
+thead th {
+    font-weight: 600;
+    width: 10%;
+}
+
+td, th {
+    border-left: 1px solid var(--light-gray);
+    border-right: 1px solid var(--light-gray);
+    border-bottom: 1px solid var(--light-gray);
+    padding: 0.5rem;
+    font-weight: 400;
+}
+
+.no-border {
+    border: none;
+}
+
+.main-table {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.table-title {
+    padding: 0.5rem;
+    color: var(--purple);
+    border: 1px solid var(--light-gray);
+}
+
+.table-results {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-results-label {
+    display: flex;
+    flex-direction: row;
+    text-align: right;
+    align-items: end;
+    margin: 0 0 0 auto;
+    padding: 0.5rem;
+    font-weight: bold;
+    width: 15%
+}
+
+.results-input {
+    background-color: transparent;
+    border: none;
+    width: auto;
+    padding: 0 0 0 5px;
+}
+
+.table-actions {
+    display: flex;
+    text-align: right;
+    align-items: end;
+    margin: 0 0 0 auto;
+    padding: 0.5rem;
+    width: 50%;
+}
+
+.btn-table {
+    border: none;
+}
+
+.info-table {
+    visibility: hidden;
+    margin-top: 0.5rem;
+    color: var(--dark-gray);
+    width: 100%;
+}
+

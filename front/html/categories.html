@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Categories</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script type="text/javascript" src="../js/categories.js" defer> </script> 
+</head>
+<body>
+    <header class="header">
+        <ul class="nav-bar">
+            <li><a class="nav-title" href="./home.html">Suite Store</a></li>
+            <li><a href="./products.html">Products</a></li>
+            <li><a class="active" href="./categories.html">Categories</a></li>
+            <li><a href="./history.html">History</a></li>
+        </ul>
+    </header>
+    
+    <main class="main">
+        <div id="conteudo" class="main-product">
+            <form id="form">
+                <div class="main-input">
+                    <input id="name" type="text" class="product-input width margin clear" placeholder="Category" required />
+                    <input id="tax" type="number" class="product-input clear" placeholder="Tax" min="0.00" step="0.01" pattern="([0-9]\d*(\.\d{1})|(\,\d{1}))" required />
+                </div>
+            </form>
+        <button id="add" class="btn purple shadow" value="Add category">Add category</button>
+        </div>
+        <div class="line"></div>
+        <div class="main-table"> 
+            <div class="table-content"> 
+            <table id="table">
+                <caption class="table-title">Categories</caption>
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Category</th>
+                        <th>Tax</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- table's rows -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+</body>
+</html>
