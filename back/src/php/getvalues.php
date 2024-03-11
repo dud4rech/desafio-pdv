@@ -25,8 +25,7 @@ function getValues() {
     }
 
     echo json_encode($data);
-}
-
+};
 getValues();
 
 ?>

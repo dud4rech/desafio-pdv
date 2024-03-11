@@ -17,7 +17,7 @@ const readProduct = async () => {
     let tr = '';
     const tbody = document.querySelector("tbody");
 
-    const data = await fetch("http://localhost/php/select.php?page=" + page, { 
+    const data = await fetch("http://localhost/php/history/select.php?", { 
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ const showDetails = async (e) => {
     const [action, index] = e.target.id.split('-');
     const selectedIndex = index;
 
-    const order = await fetch("http://localhost/php/select.php?page=" + page, {
+    const order = await fetch("http://localhost/php/home/select.php?", {
         method: "GET",
     }).then(function(response) {
         return response.json();

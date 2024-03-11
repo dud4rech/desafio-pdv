@@ -45,11 +45,10 @@ const codeGenerator = () => {
 /* Main */
 
 const readProduct = async () => {
-    let page = 'products';
     let tr = '';
     const tbody = document.querySelector("tbody");
 
-    const data = await fetch("http://localhost/php/select.php?page=" + page, { 
+    const data = await fetch("http://localhost/php/products/select.php?", { 
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
@@ -78,7 +77,7 @@ const readProduct = async () => {
 const categorySelector = async () => {
     page = 'categories';
     
-    const data = await fetch("http://localhost/php/selector.php?page=" + page, { 
+    const data = await fetch("http://localhost/php/products/selector.php?", { 
         method: "GET",
         headers: {
             'Content-Type': 'application/json'

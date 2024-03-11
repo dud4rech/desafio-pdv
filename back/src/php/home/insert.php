@@ -1,14 +1,9 @@
 <?php
-include_once "../getmethod.php";
+include_once '../connection.php';
+include_once '../getmethod.php';
 
 /* Insert */
-function insertData() {
-    $host = "pgsql_desafio";
-    $db = "applicationphp";
-    $user = "root";
-    $pw = "root";
-    $connection = new PDO("pgsql:host=$host;dbname=$db", $user, $pw);
-    
+function insertData() {    
     $data = file_get_contents("php://input");
     $decode = json_decode($data, true);
 
@@ -21,7 +16,7 @@ function insertData() {
     $price=$decode["price"];
 
     $sql = "INSERT INTO order_item (code, order_code, name, product_code, amount, price, tax) VALUES (:code, :order_code, :name, :product_code, :amount, :price, :tax)";
-    $result = $connection->prepare($sql);
+    $result = Connection::connect()->prepare($sql);
     $result->bindParam(':code', $code, PDO::PARAM_INT);
     $result->bindParam(':order_code', $orderCode, PDO::PARAM_INT);
     $result->bindParam(':name', $name, PDO::PARAM_STR);

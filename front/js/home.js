@@ -82,9 +82,7 @@ const readItem = async (data, index) => {
 };
 
 const productSelector = async () => {
-    page = 'products';
-    
-    const data = await fetch("http://localhost/php/selector.php?page=" + page, { 
+    const data = await fetch("http://localhost/php/home/selector.php?", { 
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
@@ -135,9 +133,8 @@ const getValues = async (page, action, column, product) => {
     return response;
 };
 
-const updateValues = async (page, action, newvalue, column, product) => {
+const updateValues = async (action, newvalue, column, product) => {
     const obj = {
-        page: page,
         action: action,
         newvalue: newvalue,
         column: column,
@@ -146,8 +143,8 @@ const updateValues = async (page, action, newvalue, column, product) => {
     const searchParams = new URLSearchParams(obj);
     const queryString = searchParams.toString();
 
-    const data = await fetch("http://localhost/php/update.php?" + queryString, { 
-        method: "GET",
+    const data = await fetch("http://localhost/php/products/update.php?" + queryString, { 
+        method: "UPDATE",
         headers: {
             'Content-Type': 'application/json'
         }
@@ -296,7 +293,7 @@ const buyItems = async () => {
 
             const selectedProducts = getLocalProducts();
             selectedProducts.forEach((product) => {
-                updateValues('products', 'amount', product.amount, 'name', product.name);
+                updateValues('amount', product.amount,'name', product.name);
             });
         
             createItem(orderCode);
@@ -336,8 +333,8 @@ updateTable();
 /* Store */
 const dbProducts = async () => {
     getLocalProducts();
-    page = 'products';
-    const products = await fetch("http://localhost/php/select.php?page=" + page, {
+    
+    const products = await fetch("http://localhost/php/products/select.php?", {
         method: "GET",
     }).then(function(response) {
         return response.json();

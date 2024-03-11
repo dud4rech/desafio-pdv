@@ -35,7 +35,7 @@ const readCategory = async () => {
     let tr = '';
     const tbody = document.querySelector("tbody");
 
-    const data = await fetch("http://localhost/php/select.php?page=" + page, { 
+    const data = await fetch("http://localhost/php/categories/select.php?", { 
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
