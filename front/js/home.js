@@ -241,7 +241,7 @@ const createItem = (index) => {
         alert('Please fill all the blanks input areas.');
     } else {
         for(index in data) {
-            fetch("http://localhost/php/insert.php?page=" + page, {
+            fetch("http://localhost/php/home/insert.php?", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -261,7 +261,7 @@ const createOrder = async () => {
     let tax = getTax();
     let orderCode = getOrderCode();
 
-    await fetch("http://localhost/php/insert.php?page=" + page, {
+    await fetch("http://localhost/php/history/insert.php?", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

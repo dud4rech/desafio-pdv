@@ -1,10 +1,14 @@
 <?php
-header(header:'Access-Control-Allow-Origin: *');
-header(header:'Access-Control-Allow-Headers: content-type, *');
-header(header:'Access-Control-Allow-Methods: *');
-include_once "connection.php";
+include_once "select.php";
 
 /* Read */
+function selector() {
+    $host = "pgsql_desafio";
+    $db = "applicationphp";
+    $user = "root";
+    $pw = "root";
+    $connection = new PDO("pgsql:host=$host;dbname=$db", $user, $pw);
+
     $page=$_GET["page"];
 
     $sql = "SELECT name FROM {$page}";
@@ -16,6 +20,6 @@ include_once "connection.php";
     }
 
     echo json_encode($data);
-
+}
 
 ?>

@@ -42,16 +42,17 @@ const readCategory = async () => {
         }
     });
     const response = await data.json();
-
-
+    
     for(let index in response) {
         tr += `
         <tr>
+        <form>
             <td>${response[index].code}</td>
             <td>${response[index].name.replace(/</g, "$lt;").replace(/>/g,"&gt;")}</td>
             <td>${response[index].tax.replace(/</g, "$lt;").replace(/>/g,"&gt;")}</td>
-            <td class="btn-delete"><button class="material-symbols-outlined icon" data-action="delete" id="delete-${response[index].code}">
+            <td class="btn-delete"><button name="delete" class="material-symbols-outlined icon" data-action="delete" id="delete-${response[index].code}">
             delete</button></td>
+            </form>
         </tr>
         `
         }
@@ -66,16 +67,19 @@ const createCategory = async () => {
     if(name == '' || tax == '') {
         alert('Please fill all the blanks input areas.');
     } else {
-        await fetch("http://localhost/php/insert.php?page=" + page, {
+        await fetch("http://localhost/php/categories/insert.php?", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({"code": code, "name": name, "tax": tax}),
         }).then(function(response) {
-            return response.json();
+            response.json();
+            if(response) {
+                updateTable();
+                return response;
+            }
         }) 
-        updateTable();
     }
 };
 
@@ -84,29 +88,31 @@ const deleteRow = async (e) => {
     if(action == 'delete') {
         const response = confirm("Delete data? You can't undo this action");
         if(response) {
-            deleteCategory('categories', index);
+            deleteCategory(index);
             updateTable();
         }
     }
 };
 
-const deleteCategory = async (page, code) => {
+const deleteCategory = async (code) => {
     const obj = {
-        page: page,
         code: code,
     };
-
     const searchParams = new URLSearchParams(obj);
     const queryString = searchParams.toString();
 
-    await fetch("http://localhost/php/delete.php?" + queryString, {
-            method: "GET",
+    await fetch("http://localhost/php/categories/delete.php?" + queryString, {
+            method: "DELETE",
         }).then(function(response) {
-            return response.json();
+            response.json();
+            if(response) {
+                updateTable();
+                return response;
+            }
     })
 };
 
-const updateTable = () => {
+const updateTable = () => { 
     readCategory();
     clearFields();
     

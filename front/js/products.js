@@ -22,8 +22,6 @@ const createLocal = (product) => {
 
 /* Vars */
 
-let page = 'products';
-
 const isValid = () => {
     return document.getElementById('form').reportValidity();
 };
@@ -129,7 +127,6 @@ const selectProduct = async () => {
 };
 
 const createProduct = async () => {
-    let page = 'products';
     let code = codeGenerator();
     let name = document.getElementById("name").value.replace(/</g, "$lt;").replace(/>/g,"&gt;");
     let amount = document.getElementById("amount").value.replace(/</g, "$lt;").replace(/>/g,"&gt;");
@@ -142,7 +139,7 @@ const createProduct = async () => {
         alert('Please fill all the blanks input areas.');
     } else {
         selectProduct();
-        fetch("http://localhost/php/insert.php?page=" + page, {
+        fetch("http://localhost/php/products/insert.php?", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -161,25 +158,28 @@ const deleteRow = async (e) => {
     if(action == 'delete') {
         const response = confirm("Delete data? You can't undo this action");
         if(response) {
-            deleteProduct('products', index);
+            deleteProduct(index);
             updateTable();
         }
     }
 };
 
-const deleteProduct = async (page, code) => {
+const deleteProduct =  (code) => {
     const obj = {
-        page: page,
         code: code,
     };
 
     const searchParams = new URLSearchParams(obj);
     const queryString = searchParams.toString();
 
-    fetch("http://localhost/php/delete.php?" + queryString, {
-            method: "GET",
+    fetch("http://localhost/php/products/delete.php?" + queryString, {
+            method: "DELETE",
         }).then(function(response) {
-            return response.json();
+            response.json();
+            if(response) {
+                updateTable();
+                return response;
+            }
         })
     };
 

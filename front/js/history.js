@@ -50,7 +50,7 @@ const showDetails = async (e) => {
     }).then(function(response) {
         return response.json();
     });
-    
+
     const element = document.getElementById('info-table');
     if(action == 'view' && order[index]) {
         if(element.style.visibility === 'visible') {
