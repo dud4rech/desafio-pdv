@@ -8,7 +8,7 @@ class Connection {
     protected static $connection;
 
     public function __construct() {
-        echo 'new';
+        echo 'new database';
     }
 
     public static function connect() { 
@@ -17,9 +17,10 @@ class Connection {
         $user = "root";
         $pw = "root";
         
-    
-        $conn = new PDO("pgsql:host=$host;dbname=$db", $user, $pw);
-        self::$connection = $conn;
+        if(!isset(self::$connection)) {
+            $conn = new PDO("pgsql:host=$host;dbname=$db", $user, $pw);
+            self::$connection = $conn;
+        }
         return self::$connection;
     }
 }
