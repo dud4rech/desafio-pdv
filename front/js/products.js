@@ -20,8 +20,6 @@ const createLocal = (product) => {
 
 /***************************/
 
-/* Vars */
-
 const isValid = () => {
     return document.getElementById('form').reportValidity();
 };
@@ -39,8 +37,6 @@ const clearTable = () => {
 const codeGenerator = () => {
     return Math.floor(Date.now() * Math.random() / 1000 );
 };
-
-/***************************/
 
 /* Main */
 
@@ -74,9 +70,7 @@ const readProduct = async () => {
     tbody.innerHTML = tr;
 };
 
-const categorySelector = async () => {
-    page = 'categories';
-    
+const categorySelector = async () => { 
     const data = await fetch("http://localhost/php/products/selector.php?", { 
         method: "GET",
         headers: {
@@ -158,7 +152,6 @@ const deleteRow = async (e) => {
         const response = confirm("Delete data? You can't undo this action");
         if(response) {
             deleteProduct(index);
-            updateTable();
         }
     }
 };

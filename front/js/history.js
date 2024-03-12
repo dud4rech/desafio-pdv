@@ -3,14 +3,6 @@
 const getOrderCode = () => parseInt(localStorage.getItem("db_code")) ?? 0;
 const setOrderCode = (dbCode) => localStorage.setItem("db_code", dbCode);
 
-/***************************/
-
-/* Vars */
-
-let page = 'orders';
-
-/***************************/
-
 /* Main */
 
 const readProduct = async () => {
@@ -90,8 +82,6 @@ const updateTable = () => {
     }
 };
 updateTable();
-
-/***************************/
 
 /* Events */
 

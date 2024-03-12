@@ -32,10 +32,8 @@ const deleteAllLocalItems = (index) => {
     setLocalStorage(dbItem);
 };
 
-/***************************/
-
 /* Vars */
-var page = 'order_item';
+
 var orderCode = getOrderCode();
 var inStore;
 
@@ -61,8 +59,6 @@ const registerDate = () => {
     const date = new Date;
     return (`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`);
 };
-
-/***************************/
 
 /* Main */
 
@@ -195,50 +191,50 @@ const selectItems = async () => {
     let product = document.getElementById('product').value;
     let amount = document.getElementById('amount').value;
     await productInStore(product, amount);
-    
-    if(inStore) {
-        let selectedProduct = document.getElementById('product').value; 
-        let productCode = await getValues('products', 'code', 'name', selectedProduct);
-        let productPrice = await getValues('products', 'price', 'name', selectedProduct);
 
-        let category = await getValues('products', 'category_code', 'name', 'rice');
-        let categoryTax = await getValues('categories', 'tax', 'code', category[0].category_code);
 
-        await inputAutoFill(productPrice[0].price, categoryTax[0].tax);
+    if(amount == '' || product == '') {
+        alert('Please fill all the blanks input areas.');
+    } else {
+        if(inStore) {
+            let selectedProduct = document.getElementById('product').value; 
+            let productCode = await getValues('products', 'code', 'name', selectedProduct);
+            let productPrice = await getValues('products', 'price', 'name', selectedProduct);
+
+            let category = await getValues('products', 'category_code', 'name', 'rice');
+            let categoryTax = await getValues('categories', 'tax', 'code', category[0].category_code);
+
+            await inputAutoFill(productPrice[0].price, categoryTax[0].tax);
+            
+            let itemPrice = await calculateProductTotal(amount, productPrice[0].price);
+            let itemTax = await calculateProductTax(itemPrice, categoryTax[0].tax);
+
+            const items = {
+                code: codeGenerator(),
+                orderCode: orderCode,
+                name: product,
+                productCode: productCode[0].code,
+                amount: document.getElementById('amount').value.replace(/</g, "$lt;").replace(/>/g,"&gt:"),
+                itemPrice: itemPrice,
+                itemTax: itemTax,
+                total: getTotal(),
+                tax: getTax(),
+            };
         
-        let itemPrice = await calculateProductTotal(amount, productPrice[0].price);
-        let itemTax = await calculateProductTax(itemPrice, categoryTax[0].tax);
-
-        const items = {
-            code: codeGenerator(),
-            orderCode: orderCode,
-            name: product,
-            productCode: productCode[0].code,
-            amount: document.getElementById('amount').value.replace(/</g, "$lt;").replace(/>/g,"&gt:"),
-            itemPrice: itemPrice,
-            itemTax: itemTax,
-            total: getTotal(),
-            tax: getTax(),
-        };
-
         createLocalItems(items);
         updateTable();
         clearFields();
     }  else {
         clearFields();
-    }
+    }}
 };
 
 const createItem = (index) => {
-    page = 'order_item';
     const data = getLocalStorage();
-    let orderCode = getOrderCode();
-    
-    if(amount == '') {
-        alert('Please fill all the blanks input areas.');
-    } else {
-        for(index in data) {
-            fetch("http://localhost/php/home/insert.php?", {
+    let orderCode = getOrderCode(); 
+
+    for(index in data) {
+    fetch("http://localhost/php/home/insert.php?", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -247,13 +243,11 @@ const createItem = (index) => {
             }).then(function(response) {
                 updateTable();
                 return response.json();
-            })     
-        }
+        })     
     }
 };
     
 const createOrder = async () => {
-    page = 'orders';
     let total = getTotal();
     let tax = getTax();
     let orderCode = getOrderCode();
@@ -307,12 +301,12 @@ const buyItems = async () => {
     }
 };
 
-const cancelItems = () => {
+const cancelItems = async () => {
     const response = confirm("Cancel purchase?");
         if(response) {
             deleteAllLocalItems();
-            updateTable();
-            alert("The selected items have been deleted.");
+            alert("Your shopping cart has been restored.");
+            dbProducts();
         } else {
             alert("Please, continue buying or press 'Finish' button to confirm your purchase.");
     }
@@ -331,6 +325,7 @@ const updateTable = () => {
 updateTable();
 
 /* Store */
+
 const dbProducts = async () => {
     getLocalProducts();
     
@@ -364,6 +359,7 @@ const productInStore = async (selectedProduct, selectedAmount) => {
 
 
 /* Events */
+
 document.getElementById('add').addEventListener('click', selectItems);
 document.getElementById('product').addEventListener('change', inputAutoFill);
 document.querySelector('#table>tbody').addEventListener('click', deleteRow);

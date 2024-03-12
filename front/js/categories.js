@@ -5,10 +5,6 @@ const setOrderCode = (dbCode) => localStorage.setItem("db_code", dbCode);
 
 /***************************/
 
-/* Vars */
-
-const page = 'categories';
-
 const isValid = () => {
     return document.getElementById('form').reportValidity();
 };
@@ -89,7 +85,6 @@ const deleteRow = async (e) => {
         const response = confirm("Delete data? You can't undo this action");
         if(response) {
             deleteCategory(index);
-            updateTable();
         }
     }
 };
